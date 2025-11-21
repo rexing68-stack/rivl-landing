@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RIVL — Challenge Platform</title>
+  <!-- 3D logo viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -368,34 +370,18 @@
   <div class="wrap">
 
     <header style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:42px 0; gap:32px; animation: dropIn 0.7s ease-out both;">
-  <div class="logo" aria-hidden="true" style="width:220px; height:220px;">
-    <!-- CYBER-MECHA DRAGON HEAD (C3) -->
-    <svg viewBox="0 0 512 512" width="220" height="220" style="filter:drop-shadow(0 0 55px var(--accent));">
-      <!-- Outer armored silhouette -->
-      <path d="M150 330 L110 260 L140 200 L190 150 L250 120 L310 130 L360 170 L390 230 L380 300 L330 360 L260 400 L200 380 Z" fill="var(--accent)"/>
-
-      <!-- Mechanical jaw -->
-      <path d="M205 365 L260 395 L315 365 L345 340 L350 310 L310 320 L260 350 L220 335 Z" fill="var(--accent-dark)"/>
-
-      <!-- Mecha horns -->
-      <path d="M255 120 L245 70 L285 95 L270 140 Z" fill="var(--accent-2)"/>
-      <path d="M310 130 L345 65 L370 110 L340 170 Z" fill="var(--accent-2)"/>
-
-      <!-- Mechanical eye socket -->
-      <ellipse cx="320" cy="255" rx="28" ry="18" fill="black"/>
-
-      <!-- Laser eye -->
-      <ellipse cx="320" cy="255" rx="16" ry="10" fill="var(--accent-2)"/>
-      <ellipse cx="320" cy="255" rx="8" ry="5" fill="var(--accent)"/>
-
-      <!-- Cyber plating -->
-      <path d="M250 120 L295 135 L270 170 L235 155 Z" fill="rgba(255,0,60,0.45)"/>
-      <path d="M310 130 L350 180 L325 210 L285 165 Z" fill="rgba(255,0,60,0.35)"/>
-      <path d="M210 200 L240 230 L210 260 L185 230 Z" fill="rgba(255,0,60,0.25)"/>
-
-      <!-- Inner mechanical shadows -->
-      <path d="M260 400 L330 360 L380 300 L390 230 L360 170 L310 130 L250 120 L190 150 L140 200 L110 260 L150 330 Z" fill="rgba(0,0,0,0.35)"/>
-    </svg>
+  <div class="logo" aria-hidden="true" style="width:240px; height:240px;">
+    <!-- 3D GLB logo (replace src with your hosted file) -->
+    <model-viewer
+      src="dragon.glb"
+      alt="RIVL Dragon"
+      autoplay
+      camera-controls
+      disable-zoom
+      exposure="1.1"
+      shadow-intensity="0.8"
+      style="width:240px; height:240px; background: transparent; --poster-color: transparent;"
+    ></model-viewer>
   </div>
 
   <div style="font-size:4rem; font-weight:900; letter-spacing:0.16em; text-transform:uppercase; text-align:center;">RIVL</div>
