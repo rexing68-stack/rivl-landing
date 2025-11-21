@@ -99,16 +99,31 @@
       display: grid;
       place-items: center;
     }
-    .logo img {
+    .dragon-eye {
       width: 260px;
       height: 260px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 30px var(--accent));
-      animation: logoFlicker 2.2s ease-in-out infinite;
-      transform-origin: center;
+      filter: drop-shadow(0 0 32px var(--accent));
+      animation: eyePulse 2.2s ease-in-out infinite;
     }
-    @keyframes logoFlicker {
-      0%,100% { transform: translate(0,0); opacity: 1; }
+    .dragon-eye .glitch {
+      animation: eyeGlitch 1.6s steps(2, end) infinite;
+      transform-origin: center;
+      opacity: 0.55;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes eyePulse {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.03); opacity: 0.95; }
+    }
+    @keyframes eyeGlitch {
+      0%   { transform: translate(0,0); }
+      20%  { transform: translate(-2px,1px); }
+      40%  { transform: translate(2px,-1px); }
+      60%  { transform: translate(-1px,2px); }
+      80%  { transform: translate(1px,-2px); }
+      100% { transform: translate(0,0); }
+    }
       45% { transform: translate(-1px, 1px); opacity: 0.95; }
       50% { transform: translate(2px, -1px); opacity: 0.9; }
       55% { transform: translate(0,0); opacity: 1; }
@@ -272,7 +287,7 @@
     <header>
       <div class="logo">
         <!-- NOTE: for your live site, put your dragon image in the repo root and name it exactly like this. -->
-        <img src="/mnt/data/Immagine WhatsApp 2025-11-21 ore 22.22.30_52a7013b.jpg" alt="RIVL Dragon Logo" />
+        <img src="dragon-logo.png" alt="RIVL Dragon Logo" />
       </div>
       <div class="brand-name">RIVL</div>
       <div class="pill">Private Beta</div>
