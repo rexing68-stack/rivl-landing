@@ -112,13 +112,17 @@
     .logo {
       width: 72px;
       height: 72px;
-      background: var(--accent);
-      position: relative;
-      image-rendering: pixelated;
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      box-shadow: 0 0 22px rgba(255,0,60,0.45);
-      /* pixel shock effect */
-      animation: pixelShock 1.4s infinite steps(2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: eyeGlitch 1.4s infinite steps(2);
+    }
+
+    @keyframes eyeGlitch {
+      0% { transform: translate(0,0); }
+      33% { transform: translate(-2px,1px); }
+      66% { transform: translate(2px,-1px); }
+      100% { transform: translate(0,0); }
     }
     .logo::after {
       content: "";
@@ -365,7 +369,14 @@
 
     <header>
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+        <div class="logo" aria-hidden="true">
+  <svg viewBox="0 0 100 100" width="72" height="72" style="filter:drop-shadow(0 0 12px var(--accent));">
+    <!-- cyber eye icon -->
+    <ellipse cx="50" cy="50" rx="38" ry="22" fill="none" stroke="var(--accent)" stroke-width="6"/>
+    <circle cx="50" cy="50" r="12" fill="var(--accent-dark)"/>
+    <circle cx="50" cy="50" r="6" fill="var(--accent)"/>
+  </svg>
+</div>
         <div>RIVL</div>
       </div>
       <div class="pill">Private Beta</div>
