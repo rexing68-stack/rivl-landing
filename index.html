@@ -368,17 +368,30 @@
   <div class="wrap">
 
     <header style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 0; gap:26px; animation: dropIn 0.7s ease-out both;">
-  <div class="logo" aria-hidden="true" style="width:170px; height:170px;">
-  <svg viewBox="0 0 512 512" width="170" height="170" style="filter:drop-shadow(0 0 30px var(--accent));">
-    <!-- CYBER DRAGON HEAD -->
-    <path d="M260 40 L310 70 L350 120 L360 180 L330 220 L350 260 L330 300 L280 310 L240 350 L200 330 L190 290 L150 260 L170 210 L160 160 L200 110 L240 80 Z" fill="var(--accent)" />
+  <div class="logo" aria-hidden="true" style="width:200px; height:200px;">
+  <svg viewBox="0 0 512 512" width="200" height="200" style="filter:drop-shadow(0 0 40px var(--accent));">
+    <!-- TRUE DRAGON HEAD (aggressive, clear silhouette) -->
+    <!-- Outer head shape -->
+    <path d="M140 300 L110 250 L130 200 L180 160 L240 140 L300 150 L350 190 L380 240 L370 300 L330 350 L260 380 L200 360 Z" fill="var(--accent)"/>
+
+    <!-- Jaw -->
+    <path d="M200 360 L260 380 L300 360 L330 350 L345 310 L310 310 L260 330 L220 320 L200 340 Z" fill="var(--accent-dark)"/>
+
     <!-- Horns -->
-    <path d="M260 40 L240 0 L280 20 Z" fill="var(--accent-dark)" />
-    <path d="M310 70 L330 30 L340 80 Z" fill="var(--accent-dark)" />
+    <path d="M300 150 L330 90 L360 110 L340 170 Z" fill="var(--accent)"/>
+    <path d="M240 140 L250 80 L290 100 L270 150 Z" fill="var(--accent-dark)"/>
+
     <!-- Eye -->
-    <circle cx="300" cy="185" r="18" fill="var(--accent-2)" />
-    <!-- Jaw shadow -->
-    <path d="M240 350 L280 310 L330 300 L350 260 L330 220" fill="rgba(0,0,0,0.35)" />
+    <ellipse cx="310" cy="245" rx="22" ry="14" fill="var(--accent-2)"/>
+    <ellipse cx="310" cy="245" rx="10" ry="6" fill="var(--accent)"/>
+
+    <!-- Nose details -->
+    <circle cx="260" cy="210" r="6" fill="var(--accent-dark)"/>
+    <circle cx="235" cy="220" r="5" fill="var(--accent-dark)"/>
+
+    <!-- Forehead plates (cyber style) -->
+    <path d="M240 140 L280 150 L260 175 L230 165 Z" fill="rgba(255,0,60,0.4)"/>
+    <path d="M300 150 L330 190 L310 210 L285 170 Z" fill="rgba(255,0,60,0.3)"/>
   </svg>
 </div>
   <div style="font-size:3.6rem; font-weight:900; letter-spacing:0.14em; text-transform:uppercase;">RIVL</div>
