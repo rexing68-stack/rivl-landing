@@ -110,18 +110,39 @@
 
     /* Geometric mask logo (dark MetaMask vibe) */
     .logo {
-      width: 52px;
-      height: 52px;
+      width: 54px;
+      height: 54px;
       background: linear-gradient(135deg, var(--accent-dark), var(--accent));
-      clip-path: polygon(
-        50% 0%, 78% 12%, 100% 45%, 86% 88%, 50% 100%, 14% 88%, 0% 45%, 22% 12%
-      );
-      box-shadow:
-        0 0 0 2px rgba(255,255,255,0.04) inset,
-        0 0 26px rgba(255, 0, 60, 0.6),
-        0 12px 30px rgba(0,0,0,0.8);
+      clip-path: polygon(0% 20%, 50% 0%, 100% 20%, 85% 100%, 50% 85%, 15% 100%);
       position: relative;
-      animation: logoPulse 2.6s ease-in-out infinite;
+      box-shadow: 0 0 22px rgba(255,0,60,0.55);
+      animation: glitchLogo 2.4s infinite steps(2);
+    }
+    .logo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      clip-path: inherit;
+      mix-blend-mode: screen;
+      animation: glitchShift 1.6s infinite steps(2);
+      opacity: 0.55;
+    }
+
+    @keyframes glitchLogo {
+      0% { transform: translate(0,0); filter: hue-rotate(0deg); }
+      15% { transform: translate(-2px,1px); filter: hue-rotate(20deg); }
+      30% { transform: translate(2px,-1px); filter: hue-rotate(-20deg); }
+      45% { transform: translate(-1px,2px); }
+      60% { transform: translate(1px,-2px); }
+      75% { transform: translate(0,0); }
+      100% { transform: translate(0,0); }
+    }
+
+    @keyframes glitchShift {
+      0% { transform: translate(0,0); opacity: .35; }
+      50% { transform: translate(-3px,2px); opacity: .55; }
+      100% { transform: translate(3px,-2px); opacity: .35; }
     }
     .logo::after {
       content: "";
@@ -302,10 +323,9 @@
     </header>
 
     <section class="card hero hover-lift">
-      <h1>Challenge the world.<br>Dominate the arena.</h1>
+      <h1>BREAK THE ROUTINE.<br>RULE THE GRID.</h1>
       <p>
-        RIVL turns reality into a high‑stakes arena: indoor skill games, outdoor missions, 1v1 duels, team battles and weekly ladders.
-        Win XP, unlock cosmetics, earn rare drops and rise through the ranks.
+        RIVL is a real-world cyber arena. Complete missions. Outplay opponents. Claim your spot on the grid.
       </p>
 
       <div class="features">
