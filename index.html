@@ -128,7 +128,7 @@
     }
 
     .brand-name {
-      font-size: 4rem;
+      font-size: 5rem;
       font-weight: 900;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -286,32 +286,28 @@
       <div class="logo">
         <!-- Restored Dragon Eye (Version 2: aggressive + glitch + minimal) -->
         <svg class="dragon-eye" viewBox="0 0 300 300" aria-label="RIVL Dragon Eye Logo">
-          <!-- Outer sharper eye shape -->
-          <path d="M20 150 Q95 40 150 40 Q205 40 280 150 Q205 260 150 260 Q95 260 20 150 Z"
+          <!-- Minimal dragon eye (no horns, cleaner shape) -->
+          <path d="M30 150 Q105 60 150 60 Q195 60 270 150 Q195 240 150 240 Q105 240 30 150 Z"
                 fill="none" stroke="var(--accent)" stroke-width="10" />
 
           <!-- Inner ring -->
-          <path d="M60 150 Q110 90 150 90 Q190 90 240 150 Q190 210 150 210 Q110 210 60 150 Z"
+          <path d="M70 150 Q115 105 150 105 Q185 105 230 150 Q185 195 150 195 Q115 195 70 150 Z"
                 fill="#0b0b0e" stroke="var(--accent-dark)" stroke-width="6" />
 
           <!-- Iris -->
-          <circle cx="150" cy="150" r="48" fill="var(--accent-dark)" />
-          <circle cx="150" cy="150" r="34" fill="var(--accent)" opacity="0.9" />
+          <circle cx="150" cy="150" r="40" fill="var(--accent-dark)" />
+          <circle cx="150" cy="150" r="28" fill="var(--accent)" opacity="0.9" />
 
-          <!-- Vertical slit pupil -->
-          <path d="M150 110 Q162 150 150 190 Q138 150 150 110 Z" fill="#000" />
+          <!-- Vertical pupil -->
+          <path d="M150 120 Q158 150 150 180 Q142 150 150 120 Z" fill="#000" />
 
           <!-- Glow -->
-          <circle cx="150" cy="150" r="16" fill="var(--accent-2)" />
+          <circle cx="150" cy="150" r="12" fill="var(--accent-2)" />
 
-          <!-- Top spikes (dragon feel) -->
-          <path d="M110 65 L135 35 L160 70" stroke="var(--accent)" stroke-width="9" fill="none" stroke-linecap="round" />
-          <path d="M180 70 L205 35 L230 65" stroke="var(--accent)" stroke-width="9" fill="none" stroke-linecap="round" />
-
-          <!-- Glitch layer -->
+          <!-- Glitch overlay -->
           <g class="glitch">
-            <path d="M20 150 Q95 40 150 40 Q205 40 280 150 Q205 260 150 260 Q95 260 20 150 Z"
-                  fill="none" stroke="var(--accent-2)" stroke-width="5" />
+            <path d="M30 150 Q105 60 150 60 Q195 60 270 150 Q195 240 150 240 Q105 240 30 150 Z"
+                  fill="none" stroke="var(--accent-2)" stroke-width="4" />
           </g>
         </svg>
       </div>
