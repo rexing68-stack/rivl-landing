@@ -101,22 +101,47 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 1.45rem;
-      font-weight: 800;
-      letter-spacing: 0.07em;
+      gap: 20px;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
     }
 
     /* Geometric mask logo (dark MetaMask vibe) */
     .logo {
-      width: 54px;
-      height: 16px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-dark));
-      border-radius: 2px;
+      width: 72px;
+      height: 72px;
+      background: var(--accent);
       position: relative;
-      box-shadow: 0 0 14px rgba(255,0,60,0.45);
-      animation: logoGlitch 1.8s infinite steps(2);
+      image-rendering: pixelated;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      box-shadow: 0 0 22px rgba(255,0,60,0.45);
+      /* pixel shock effect */
+      animation: pixelShock 1.4s infinite steps(2);
+    }
+    .logo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--accent-dark);
+      mix-blend-mode: hard-light;
+      opacity: 0.35;
+      animation: pixelShift 1.4s infinite steps(3);
+    }
+
+    @keyframes pixelShock {
+      0% { transform: translate(0,0); }
+      25% { transform: translate(-3px,1px); }
+      50% { transform: translate(2px,-2px); }
+      75% { transform: translate(-1px,2px); }
+      100% { transform: translate(0,0); }
+    }
+
+    @keyframes pixelShift {
+      0% { clip-path: inset(0 0 0 0); opacity:.2; }
+      50% { clip-path: inset(20% 0 0 0); opacity:.5; }
+      100% { clip-path: inset(0 0 10% 0); opacity:.3; }
     }
     .logo::after {
       content: "";
