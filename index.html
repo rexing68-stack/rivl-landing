@@ -1,31 +1,14 @@
-
-      padding: 8px 2px;
-      animation: dropIn 0.7s ease-out both;
-    }
-
-    @keyframes dropIn {
-      from { opacity: 0; transform: translateY(-12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      font-size: 2.2rem;
-      font-weight: 900;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RIVL — Challenge Platform</title>
-  <!-- 3D logo viewer -->
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #050506;
@@ -58,35 +41,28 @@
       overflow-x: hidden;
     }
 
-    /* Geometric background layer */
+    /* Floating glow geometry */
     body::before,
     body::after {
       content: "";
       position: fixed;
-      inset: -20% -10% auto auto;
-      width: 800px;
-      height: 800px;
+      pointer-events: none;
+      z-index: -2;
+      width: 820px;
+      height: 820px;
+      filter: blur(44px);
+      opacity: 0.55;
       background:
         conic-gradient(from 220deg, rgba(255,0,60,0.25), rgba(255,0,60,0) 30%, rgba(255,0,60,0.18) 55%, rgba(255,0,60,0) 80%),
         radial-gradient(circle at 30% 30%, rgba(255,36,85,0.25), transparent 55%);
-      filter: blur(40px);
-      opacity: 0.6;
-      transform: translate3d(0,0,0);
-      pointer-events: none;
       animation: floatGlow 14s ease-in-out infinite alternate;
-      z-index: -2;
     }
-    body::after {
-      inset: auto auto -25% -10%;
-      width: 720px;
-      height: 720px;
-      opacity: 0.45;
-      animation-duration: 18s;
-    }
+    body::before { inset: -25% -10% auto auto; }
+    body::after  { inset: auto auto -30% -10%; width: 720px; height: 720px; opacity: 0.45; animation-duration: 18s; }
 
     @keyframes floatGlow {
       from { transform: translateY(0) rotate(0deg); }
-      to { transform: translateY(-40px) rotate(8deg); }
+      to   { transform: translateY(-40px) rotate(8deg); }
     }
 
     .wrap {
@@ -98,124 +74,56 @@
       align-items: center;
       position: relative;
     }
+    @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
 
-    @media (max-width: 900px) {
-      .wrap { grid-template-columns: 1fr; }
-    }
-
+    /* Header centered, logo above name */
     header {
       grid-column: 1 / -1;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* Geometric mask logo (dark MetaMask vibe) */
-    .logo {
-      width: 72px;
-      height: 72px;
-      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      animation: eyeGlitch 1.4s infinite steps(2);
+      padding: 42px 0;
+      gap: 22px;
+      animation: dropIn 0.7s ease-out both;
+      text-align: center;
+    }
+    @keyframes dropIn {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes eyeGlitch {
-      0% { transform: translate(0,0); }
-      33% { transform: translate(-2px,1px); }
-      66% { transform: translate(2px,-1px); }
-      100% { transform: translate(0,0); }
+    .logo {
+      width: 260px;
+      height: 260px;
+      display: grid;
+      place-items: center;
     }
-    .logo::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: var(--accent-dark);
-      mix-blend-mode: hard-light;
-      opacity: 0.35;
-      animation: pixelShift 1.4s infinite steps(3);
+    .logo img {
+      width: 260px;
+      height: 260px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 30px var(--accent));
+      animation: logoFlicker 2.2s ease-in-out infinite;
+      transform-origin: center;
     }
-
-    @keyframes pixelShock {
-      0% { transform: translate(0,0); }
-      25% { transform: translate(-3px,1px); }
-      50% { transform: translate(2px,-2px); }
-      75% { transform: translate(-1px,2px); }
-      100% { transform: translate(0,0); }
+    @keyframes logoFlicker {
+      0%,100% { transform: translate(0,0); opacity: 1; }
+      45% { transform: translate(-1px, 1px); opacity: 0.95; }
+      50% { transform: translate(2px, -1px); opacity: 0.9; }
+      55% { transform: translate(0,0); opacity: 1; }
     }
 
-    @keyframes pixelShift {
-      0% { clip-path: inset(0 0 0 0); opacity:.2; }
-      50% { clip-path: inset(20% 0 0 0); opacity:.5; }
-      100% { clip-path: inset(0 0 10% 0); opacity:.3; }
-    }
-    .logo::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, var(--accent-dark), var(--accent));
-      mix-blend-mode: screen;
-      opacity: 0.4;
-      animation: logoShift 1.2s infinite steps(2);
-    }
-
-    @keyframes logoGlitch {
-      0% { transform: translate(0,0); }
-      20% { transform: translate(-2px,1px); }
-      40% { transform: translate(2px,-1px); }
-      60% { transform: translate(-1px,2px); }
-      80% { transform: translate(1px,-2px); }
-      100% { transform: translate(0,0); }
-    }
-
-    @keyframes logoShift {
-      0% { transform: translate(0,0); opacity: .3; }
-      50% { transform: translate(-3px,1px); opacity: .6; }
-      100% { transform: translate(2px,-1px); opacity: .3; }
-    }
-    .logo::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: inherit;
-      clip-path: inherit;
-      mix-blend-mode: screen;
-      animation: glitchShift 1.6s infinite steps(2);
-      opacity: 0.55;
-    }
-
-    @keyframes glitchLogo {
-      0% { transform: translate(0,0); filter: hue-rotate(0deg); }
-      15% { transform: translate(-2px,1px); filter: hue-rotate(20deg); }
-      30% { transform: translate(2px,-1px); filter: hue-rotate(-20deg); }
-      45% { transform: translate(-1px,2px); }
-      60% { transform: translate(1px,-2px); }
-      75% { transform: translate(0,0); }
-      100% { transform: translate(0,0); }
-    }
-
-    @keyframes glitchShift {
-      0% { transform: translate(0,0); opacity: .35; }
-      50% { transform: translate(-3px,2px); opacity: .55; }
-      100% { transform: translate(3px,-2px); opacity: .35; }
-    }
-    .logo::after {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      background: #0b0b0e;
-      clip-path: polygon(50% 0%, 85% 30%, 70% 100%, 30% 100%, 15% 30%);
-      opacity: 0.95;
-      box-shadow: 0 0 16px rgba(255,0,60,0.55);
-    }
-
-    @keyframes logoPulse {
-      0%,100% { transform: translateY(0) scale(1); filter: saturate(1.1); }
-      50% { transform: translateY(-1px) scale(1.03); filter: saturate(1.5); }
+    .brand-name {
+      font-size: 4rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      line-height: 1;
     }
 
     .pill {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 800;
       color: #fff;
       background: linear-gradient(180deg, #24000d, #120006);
@@ -225,6 +133,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       box-shadow: 0 0 12px rgba(255,0,60,0.25);
+      transform: scale(1.2);
     }
 
     .card {
@@ -236,8 +145,13 @@
       position: relative;
       overflow: hidden;
       animation: rise 0.8s ease-out both;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
-
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: #ff2a59;
+      box-shadow: 0 14px 36px rgba(255,0,60,0.35);
+    }
     .card::before {
       content: "";
       position: absolute;
@@ -251,17 +165,9 @@
       transform: rotate(12deg);
       pointer-events: none;
     }
-
     @keyframes rise {
       from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hover-lift { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
-    .hover-lift:hover {
-      transform: translateY(-3px);
-      border-color: #ff2a59;
-      box-shadow: 0 14px 36px rgba(255,0,60,0.35);
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .hero h1 {
@@ -270,8 +176,8 @@
       margin: 2px 0 14px 0;
       font-weight: 800;
       letter-spacing: -0.02em;
+      text-transform: uppercase;
     }
-
     .hero p {
       color: var(--muted);
       font-size: 1.05rem;
@@ -285,7 +191,6 @@
       gap: 12px;
       margin-top: 18px;
     }
-
     .feature {
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -294,21 +199,20 @@
       display: flex;
       gap: 10px;
       font-size: 0.95rem;
-      transition: 0.2s;
       align-items: center;
+      transition: 0.2s;
     }
-
     .feature:hover {
       border-color: var(--accent);
       background: #160008;
       transform: translateY(-2px);
     }
-
     .dot {
       width: 9px; height: 9px;
       border-radius: 2px;
       background: var(--accent);
       box-shadow: 0 0 10px var(--accent);
+      flex: 0 0 auto;
     }
 
     .cta-card h2 { margin: 0 0 6px 0; font-size: 1.35rem; }
@@ -320,7 +224,6 @@
       gap: 8px;
       margin-top: 10px;
     }
-
     input[type="email"] {
       padding: 12px 14px;
       border-radius: var(--radius);
@@ -331,12 +234,10 @@
       transition: 0.2s;
       outline: none;
     }
-
     input[type="email"]:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(255,0,60,0.2);
     }
-
     button {
       padding: 12px 18px;
       border-radius: var(--radius);
@@ -349,7 +250,6 @@
       box-shadow: 0 0 14px rgba(255, 0, 60, 0.6);
       transition: 0.2s;
     }
-
     button:hover {
       background: linear-gradient(180deg, var(--accent), var(--accent-dark));
       transform: translateY(-2px);
@@ -369,16 +269,16 @@
 <body>
   <div class="wrap">
 
-    <header style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:42px 0; gap:32px; animation: dropIn 0.7s ease-out both;">
-  <div class="logo" aria-hidden="true" style="width:260px; height:260px; display:flex; align-items:center; justify-content:center;">
-    <img src="Immagine WhatsApp 2025-11-21 ore 22.22.30_52a7013b.jpg" alt="Dragon Logo" style="width:260px; height:260px; object-fit:contain; filter:drop-shadow(0 0 30px var(--accent));">
-  </div>
+    <header>
+      <div class="logo">
+        <!-- NOTE: for your live site, put your dragon image in the repo root and name it exactly like this. -->
+        <img src="/mnt/data/Immagine WhatsApp 2025-11-21 ore 22.22.30_52a7013b.jpg" alt="RIVL Dragon Logo" />
+      </div>
+      <div class="brand-name">RIVL</div>
+      <div class="pill">Private Beta</div>
+    </header>
 
-  <div style="font-size:4rem; font-weight:900; letter-spacing:0.16em; text-transform:uppercase; text-align:center;">RIVL</div>
-  <div class="pill" style="transform:scale(1.2); font-size:14px;">Private Beta</div>
-</header>
-
-    <section class="card hero hover-lift">
+    <section class="card hero">
       <h1>BREAK THE ROUTINE.<br>RULE THE GRID.</h1>
       <p>
         RIVL is a real‑world cyber arena. Complete missions. Outplay opponents. Claim your spot on the grid.
@@ -392,7 +292,7 @@
       </div>
     </section>
 
-    <aside class="card cta-card hover-lift">
+    <aside class="card cta-card">
       <h2>Get early access</h2>
       <p>Enter your email to join the private beta.</p>
 
