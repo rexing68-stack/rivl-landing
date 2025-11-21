@@ -367,35 +367,39 @@
 <body>
   <div class="wrap">
 
-    <header style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 0; gap:26px; animation: dropIn 0.7s ease-out both;">
-  <div class="logo" aria-hidden="true" style="width:200px; height:200px;">
-  <svg viewBox="0 0 512 512" width="200" height="200" style="filter:drop-shadow(0 0 40px var(--accent));">
-    <!-- TRUE DRAGON HEAD (aggressive, clear silhouette) -->
-    <!-- Outer head shape -->
-    <path d="M140 300 L110 250 L130 200 L180 160 L240 140 L300 150 L350 190 L380 240 L370 300 L330 350 L260 380 L200 360 Z" fill="var(--accent)"/>
+    <header style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:42px 0; gap:32px; animation: dropIn 0.7s ease-out both;">
+  <div class="logo" aria-hidden="true" style="width:220px; height:220px;">
+    <!-- CYBER-MECHA DRAGON HEAD (C3) -->
+    <svg viewBox="0 0 512 512" width="220" height="220" style="filter:drop-shadow(0 0 55px var(--accent));">
+      <!-- Outer armored silhouette -->
+      <path d="M150 330 L110 260 L140 200 L190 150 L250 120 L310 130 L360 170 L390 230 L380 300 L330 360 L260 400 L200 380 Z" fill="var(--accent)"/>
 
-    <!-- Jaw -->
-    <path d="M200 360 L260 380 L300 360 L330 350 L345 310 L310 310 L260 330 L220 320 L200 340 Z" fill="var(--accent-dark)"/>
+      <!-- Mechanical jaw -->
+      <path d="M205 365 L260 395 L315 365 L345 340 L350 310 L310 320 L260 350 L220 335 Z" fill="var(--accent-dark)"/>
 
-    <!-- Horns -->
-    <path d="M300 150 L330 90 L360 110 L340 170 Z" fill="var(--accent)"/>
-    <path d="M240 140 L250 80 L290 100 L270 150 Z" fill="var(--accent-dark)"/>
+      <!-- Mecha horns -->
+      <path d="M255 120 L245 70 L285 95 L270 140 Z" fill="var(--accent-2)"/>
+      <path d="M310 130 L345 65 L370 110 L340 170 Z" fill="var(--accent-2)"/>
 
-    <!-- Eye -->
-    <ellipse cx="310" cy="245" rx="22" ry="14" fill="var(--accent-2)"/>
-    <ellipse cx="310" cy="245" rx="10" ry="6" fill="var(--accent)"/>
+      <!-- Mechanical eye socket -->
+      <ellipse cx="320" cy="255" rx="28" ry="18" fill="black"/>
 
-    <!-- Nose details -->
-    <circle cx="260" cy="210" r="6" fill="var(--accent-dark)"/>
-    <circle cx="235" cy="220" r="5" fill="var(--accent-dark)"/>
+      <!-- Laser eye -->
+      <ellipse cx="320" cy="255" rx="16" ry="10" fill="var(--accent-2)"/>
+      <ellipse cx="320" cy="255" rx="8" ry="5" fill="var(--accent)"/>
 
-    <!-- Forehead plates (cyber style) -->
-    <path d="M240 140 L280 150 L260 175 L230 165 Z" fill="rgba(255,0,60,0.4)"/>
-    <path d="M300 150 L330 190 L310 210 L285 170 Z" fill="rgba(255,0,60,0.3)"/>
-  </svg>
-</div>
-  <div style="font-size:3.6rem; font-weight:900; letter-spacing:0.14em; text-transform:uppercase;">RIVL</div>
-  <div class="pill" style="transform:scale(1.1);">Private Beta</div>
+      <!-- Cyber plating -->
+      <path d="M250 120 L295 135 L270 170 L235 155 Z" fill="rgba(255,0,60,0.45)"/>
+      <path d="M310 130 L350 180 L325 210 L285 165 Z" fill="rgba(255,0,60,0.35)"/>
+      <path d="M210 200 L240 230 L210 260 L185 230 Z" fill="rgba(255,0,60,0.25)"/>
+
+      <!-- Inner mechanical shadows -->
+      <path d="M260 400 L330 360 L380 300 L390 230 L360 170 L310 130 L250 120 L190 150 L140 200 L110 260 L150 330 Z" fill="rgba(0,0,0,0.35)"/>
+    </svg>
+  </div>
+
+  <div style="font-size:4rem; font-weight:900; letter-spacing:0.16em; text-transform:uppercase; text-align:center;">RIVL</div>
+  <div class="pill" style="transform:scale(1.2); font-size:14px;">Private Beta</div>
 </header>
 
     <section class="card hero hover-lift">
