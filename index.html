@@ -4,86 +4,242 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RIVL — Challenge Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #f7f8fa;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #f6851b;   /* MetaMask-like orange */
+      --accent-dark: #e2761b;
+      --accent-soft: #fff1e3;
+      --radius: 6px;
+      --shadow: 0 12px 40px rgba(17, 24, 39, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      padding: 0;
-      background: #0d0d0d;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% -10%, #ffffff 0%, var(--bg) 55%),
+                  radial-gradient(900px 500px at 110% 0%, #fff7ef 0%, var(--bg) 60%);
+      color: var(--text);
       min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px;
     }
-    .container {
-      text-align: center;
-      max-width: 700px;
-      padding: 20px;
+
+    .wrap {
+      width: 100%;
+      max-width: 980px;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
     }
-    h1 {
-      font-size: 4rem;
-      letter-spacing: 4px;
-      margin-bottom: 10px;
-      font-weight: 900;
+
+    @media (max-width: 900px) {
+      .wrap { grid-template-columns: 1fr; }
     }
-    p {
-      font-size: 1.2rem;
-      line-height: 1.5;
-      opacity: 0.85;
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 2px;
     }
-    .cta {
-      margin-top: 30px;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
     }
-    input[type="email"] {
-      padding: 12px;
-      border-radius: 6px;
-      border: none;
-      width: 260px;
-      margin-right: 10px;
-      font-size: 1rem;
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px /* squared */;
+      background:
+        conic-gradient(from 120deg, var(--accent) 0 30%, #ffb86c 30% 55%, var(--accent-dark) 55% 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.8), 0 6px 16px rgba(246,133,27,0.35);
     }
-    button {
-      padding: 12px 22px;
-      background: #ff004c;
-      border: none;
-      border-radius: 6px;
-      color: #fff;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    button:hover {
-      background: #d10042;
-    }
-    .tagline {
-      color: #ff004c;
-      font-weight: bold;
-      margin-bottom: 20px;
+
+    .pill {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-dark);
+      background: var(--accent-soft);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #ffe0c2;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      letter-spacing: 2px;
     }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius); /* squared */
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 3.6vw, 3.4rem);
+      line-height: 1.1;
+      margin: 10px 0 10px 0;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 0 0 14px 0;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .feature {
+      border: 1px dashed var(--line);
+      border-radius: 6px /* squared */;
+      padding: 12px 12px;
+      background: #fafafa;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+      margin-top: 6px; flex: 0 0 auto;
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+
+    .cta-card h2 {
+      margin: 0 0 6px 0;
+      font-size: 1.3rem;
+      letter-spacing: -0.01em;
+    }
+    .cta-card p { margin: 0 0 16px 0; color: var(--muted); font-size: 0.98rem; }
+
+    .form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 6px /* squared */;
+      border: 1px solid var(--line);
+      font-size: 1rem;
+      outline: none;
+      transition: 0.15s;
+      background: #fff;
+    }
+
+    input[type="email"]:focus {
+      border-color: #ffd0a6;
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+
+    button {
+      padding: 12px 16px;
+      border-radius: 6px /* squared */;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.15s;
+      box-shadow: 0 6px 14px rgba(246,133,27,0.35);
+    }
+
+    button:hover { transform: translateY(-1px); background: var(--accent-dark); }
+
+    .fineprint {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 6px;
+    }
+
+    a { color: var(--accent-dark); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>RIVL</h1>
-    <div class="tagline">Challenge. Compete. Rise.</div>
-    <p>
-      Entra nella nuova arena delle sfide. Skill games, missioni indoor e outdoor,
-      competizioni 1v1, ranked, lootbox, ricompense esclusive. Vinci XP, sali di
-      livello, domina le classifiche.
-    </p>
-    <p>
-      RIVL è attualmente in fase di accesso privato. Inserisci la tua email per
-      diventare tester e accedere alle prime sfide.
-    </p>
-    <div class="cta">
-      <input type="email" placeholder="La tua email" />
-      <button>Unisciti</button>
-    </div>
+  <div class="wrap">
+
+    <header class="card" style="grid-column: 1 / -1; display:flex; align-items:center; justify-content:space-between;">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>RIVL</div>
+      </div>
+      <div class="pill">Private Beta</div>
+    </header>
+
+    <section class="card hero">
+      <div class="pill" style="display:inline-flex; margin-bottom:10px;">Challenge Platform</div>
+      <h1>Compete anywhere.<br/>Level up everywhere.</h1>
+      <p>
+        RIVL turns daily life into an arena of bite‑size challenges: indoor skill games, outdoor missions, 1v1 duels, team battles and weekly ladders.
+        Win XP, unlock loot, collect rare cosmetics, and climb the ranks — all while staying active.
+      </p>
+      <div class="features">
+        <div class="feature"><span class="dot"></span><div><strong>Indoor & Outdoor</strong><br/>Play from home or out in the city.</div></div>
+        <div class="feature"><span class="dot"></span><div><strong>Skill‑based Rewards</strong><br/>Winners earn more XP & rare drops.</div></div>
+        <div class="feature"><span class="dot"></span><div><strong>Weekly Leaderboards</strong><br/>Reset seasons keep the competition fresh.</div></div>
+        <div class="feature"><span class="dot"></span><div><strong>Healthy by design</strong><br/>Movement is built into the fun.</div></div>
+      </div>
+    </section>
+
+    <aside class="card cta-card">
+      <h2>Get early access</h2>
+      <p>We’re onboarding a small group of testers. Leave your email to join the private beta.</p>
+
+      <form class="form" onsubmit="event.preventDefault(); alert('Thanks! We will contact you soon.');">
+        <input type="email" required placeholder="you@example.com" />
+        <button type="submit">Join beta</button>
+      </form>
+
+      <div class="fineprint">
+        No spam. You’ll only hear from us about beta invites.
+      </div>
+    </aside>
+
+    <footer style="grid-column: 1 / -1;">
+      © <span id="year"></span> RIVL Club. All rights reserved.
+    </footer>
   </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
