@@ -46,19 +46,18 @@
       overflow-x: hidden;
     }
 
-    /* Floating glow geometry */
-    /* DRAGON BACKGROUND BLUR */
-    body::after {
+    /* DRAGON BACKGROUND BLUR (layer 1) */
+    body::before {
       content: "";
       position: fixed;
       inset: 0;
       background: url('/mnt/data/gltf_embedded_0.png') center/contain no-repeat;
-      filter: blur(90px) opacity(0.09);
+      filter: blur(90px) opacity(0.12);
       z-index: -3;
       pointer-events: none;
     }
 
-    body::before,
+    /* Floating glow geometry (layer 2) */
     body::after {
       content: "";
       position: fixed;
@@ -71,13 +70,14 @@
       background:
         conic-gradient(from 220deg, rgba(255,0,60,0.25), rgba(255,0,60,0) 30%, rgba(255,0,60,0.18) 55%, rgba(255,0,60,0) 80%),
         radial-gradient(circle at 30% 30%, rgba(255,36,85,0.25), transparent 55%);
+      inset: -25% -10% auto auto;
       animation: floatGlow 14s ease-in-out infinite alternate;
     }
-    body::before { inset: -25% -10% auto auto; }
-    body::after  { inset: auto auto -30% -10%; width: 720px; height: 720px; opacity: 0.45; animation-duration: 18s; }
 
     @keyframes floatGlow {
       from { transform: translateY(0) rotate(0deg); }
+      to   { transform: translateY(-40px) rotate(8deg); }
+    }
       to   { transform: translateY(-40px) rotate(8deg); }
     }
 
@@ -118,7 +118,7 @@
     .dragon-eye {
       width: 180px;
       height: 180px;
-      filter: drop-shadow(0 0 28px var(--accent))) drop-shadow(0 0 28px var(--accent)));
+      filter: drop-shadow(0 0 28px var(--accent));
       animation: eyePulse 2.2s ease-in-out infinite;
     }
     .dragon-eye .glitch {
