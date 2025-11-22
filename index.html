@@ -11,26 +11,22 @@
 
   <style>
     :root {
-      --bg: #050506;
+      --bg: #000;
       --card: #0f0f12;
       --card-2: #121218;
       --text: #ffffff;
       --muted: #9a9aa1;
       --line: #23232b;
 
-      /* PRIMARY ACCENT → RED */
       --accent: #ff003c;
       --accent-2: #ff2455;
       --accent-dark: #b8002e;
-
-      /* no secondary accent */
 
       --radius: 3px;
       --shadow: 0 10px 26px rgba(255, 0, 60, 0.22);
     }
 
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -39,11 +35,112 @@
       display: grid;
       place-items: center;
       padding: 34px;
-      background: #000;
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* Ambient red glow (original) */
+    body::after {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      z-index: -2;
+      width: 1200px;
+      height: 1200px;
+      inset: -25% -20% auto auto;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(255,0,60,0.42), transparent 70%),
+        radial-gradient(circle at 60% 60%, rgba(180,0,35,0.30), transparent 80%),
+        radial-gradient(circle at 45% 55%, rgba(255,0,60,0.18), transparent 85%);
+      filter: blur(140px);
+      opacity: 0.68;
+      animation: floatGlow 14s ease-in-out infinite alternate;
+    }
+    @keyframes floatGlow {
+      from { transform: translateY(0) rotate(0deg); }
+      to   { transform: translateY(-40px) rotate(8deg); }
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      animation: rise 0.7s ease both;
     }
     @keyframes rise {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    header {
+      grid-column: 1 / -1;
+      display: grid;
+      place-items: center;
+      position: relative;
+      padding: 8px 0 2px 0;
+    }
+
+    /* HEADER LOGIN BUTTON */
+    .auth-link {
+      position: absolute;
+      right: 0;
+      top: 0;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: #fff;
+      padding: 10px 12px;
+      border: 1px solid #ff2a59;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--accent-2), var(--accent));
+      box-shadow: 0 0 12px rgba(255,0,60,0.6);
+      transition: .2s;
+    }
+    .auth-link:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+      box-shadow: 0 0 18px rgba(255,0,60,0.9);
+    }
+
+    .logo svg {
+      width: 120px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px auto;
+      filter: drop-shadow(0 0 28px var(--accent));
+    }
+
+    .brand-name {
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      text-align: center;
+      margin-top: 6px;
+      color: var(--text);
+    }
+
+    .pill {
+      margin-top: 6px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #0b0b0e;
     }
 
     .hero h1 {
@@ -133,6 +230,24 @@
       box-shadow: 0 0 22px rgba(255,0,60,0.85);
     }
 
+    /* Optional secondary CTA under hero */
+    .hero .secondary-auth {
+      display: inline-block;
+      margin-top: 8px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0.9;
+      transition: .2s;
+    }
+    .hero .secondary-auth:hover {
+      color: var(--accent);
+      opacity: 1;
+    }
+
     footer {
       grid-column: 1 / -1;
       text-align: center;
@@ -141,46 +256,23 @@
       margin-top: 8px;
       opacity: 0.9;
     }
-  
 
-  /* Blue glow background */
-    body::after {
-      content: "";
-      position: fixed;
-      pointer-events: none;
-      z-index: -2;
-      width: 1200px;
-      height: 1200px;
-      inset: -25% -20% auto auto;
-      background:
-        radial-gradient(circle at 50% 40%, rgba(255,0,60,0.42), transparent 70%),
-        radial-gradient(circle at 60% 60%, rgba(180,0,35,0.30), transparent 80%),
-        radial-gradient(circle at 45% 55%, rgba(255,0,60,0.18), transparent 85%);
-      filter: blur(140px);
-      opacity: 0.68;
-      animation: floatGlow 14s ease-in-out infinite alternate;
+    @media (max-width: 900px) {
+      .wrap { grid-template-columns: 1fr; }
+      .features { grid-template-columns: 1fr; }
+      .auth-link { position: static; margin-bottom: 10px; }
+      header { gap: 6px; }
     }
-
-  .logo svg {
-  width: 120px;
-  height: auto;
-  display: block;
-  margin: 0 auto 10px auto;
-}
-.brand-name {
-  font-size: 3.2rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  text-align: center;
-  margin-top: 6px;
-  color: var(--text);
-}
-</style>
+  </style>
 </head>
+
 <body>
   <div class="wrap">
 
     <header>
+      <!-- LOGIN / SIGNUP button -->
+      <a class="auth-link" href="/auth.html">Login / Signup</a>
+
       <div class="logo">
         <svg class="dragon-eye" viewBox="0 0 300 300" aria-label="RIVL Cyber Arch Logo">
           <!-- CYBER ARCH (sharp, angular, glowing) -->
@@ -192,6 +284,7 @@
                 fill="#000" stroke="var(--accent-dark)" stroke-width="6" />
         </svg>
       </div>
+
       <div class="brand-name">RIVL</div>
       <div class="pill">Private Beta</div>
     </header>
@@ -199,12 +292,14 @@
     <section class="card hero">
       <h1>BREAK THE ROUTINE.<br>RULE THE GRID.</h1>
       <p>
-        RIVL is a real‑world cyber arena. Complete missions. Outplay opponents. Claim your spot on the grid.
+        RIVL is a real-world cyber arena. Complete missions. Outplay opponents. Claim your spot on the grid.
       </p>
+
+      <a class="secondary-auth" href="/auth.html">Enter the Arena →</a>
 
       <div class="features">
         <div class="feature"><span class="dot"></span>Indoor & Outdoor missions</div>
-        <div class="feature"><span class="dot"></span>Skill‑based progression</div>
+        <div class="feature"><span class="dot"></span>Skill-based progression</div>
         <div class="feature"><span class="dot"></span>Weekly competitive ladders</div>
         <div class="feature"><span class="dot"></span>Stay active through play</div>
       </div>
@@ -228,5 +323,8 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
+  <!-- Supabase client -->
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
