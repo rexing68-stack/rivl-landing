@@ -1,228 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>RIVL — Auth</title>
+// SIGNUP
+if (mode === "signup") {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password
+  });
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --bg:#000;
-    --card:#0f0f12;
-    --line:#23232b;
-    --text:#fff;
-    --muted:#9a9aa1;
-    --accent:#ff003c;
-    --accent-2:#ff2455;
-    --accent-dark:#b8002e;
-    --radius:3px;
+  if (error) {
+    alert("Signup error: " + error.message);
+    return;
   }
 
-  body{
-    margin:0;
-    background:var(--bg);
-    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    color:var(--text);
-    min-height:100vh;
-    display:grid;
-    place-items:center;
-    padding:40px;
-    overflow:hidden;
-  }
+  // CREATE PROFILE ROW
+  if (data.user) {
+    const username = email.split("@")[0].toLowerCase();
 
-  /* same red ambient glow style */
-  body::after{
-    content:"";
-    position:fixed;
-    pointer-events:none;
-    z-index:-1;
-    width:1200px;height:1200px;
-    inset:-25% -20% auto auto;
-    background:
-      radial-gradient(circle at 50% 40%, rgba(255,0,60,0.42), transparent 70%),
-      radial-gradient(circle at 60% 60%, rgba(180,0,35,0.30), transparent 80%),
-      radial-gradient(circle at 45% 55%, rgba(255,0,60,0.18), transparent 85%);
-    filter:blur(140px);
-    opacity:.68;
-    animation:floatGlow 14s ease-in-out infinite alternate;
-  }
-  @keyframes floatGlow{
-    from{transform:translateY(0) rotate(0deg)}
-    to{transform:translateY(-40px) rotate(8deg)}
-  }
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .insert({
+        id: data.user.id,
+        username,
+        xp: 0,
+        level: 1,
+        rank_points: 0
+      });
 
-  .auth-box{
-    width:100%;
-    max-width:380px;
-    background:linear-gradient(180deg,#0f0f12,#121218);
-    border:1px solid var(--line);
-    padding:28px;
-    border-radius:var(--radius);
-    box-shadow:0 0 22px rgba(255,0,60,.5);
-    position:relative;
-  }
-
-  h1{
-    text-align:center;
-    font-size:1.7rem;
-    margin:0 0 18px 0;
-    color:var(--accent);
-    text-transform:uppercase;
-    font-weight:900;
-    letter-spacing:.08em;
-  }
-
-  input{
-    width:100%;
-    padding:12px;
-    margin-bottom:12px;
-    background:#0a0a0d;
-    border:1px solid var(--line);
-    color:var(--text);
-    border-radius:var(--radius);
-    font-size:1rem;
-    outline:none;
-    transition:.2s;
-  }
-  input:focus{
-    border-color:var(--accent);
-    box-shadow:0 0 0 3px rgba(255,0,60,.2);
-  }
-
-  button{
-    width:100%;
-    padding:12px;
-    background:linear-gradient(180deg,var(--accent-2),var(--accent));
-    border:1px solid #ff2a59;
-    color:#fff;
-    font-size:1rem;
-    font-weight:800;
-    cursor:pointer;
-    border-radius:var(--radius);
-    box-shadow:0 0 14px rgba(255,0,60,.6);
-    transition:.2s;
-  }
-  button:hover{
-    background:linear-gradient(180deg,var(--accent),var(--accent-dark));
-    transform:translateY(-2px);
-    box-shadow:0 0 22px rgba(255,0,60,.85);
-  }
-
-  .toggle{
-    margin-top:14px;
-    text-align:center;
-    color:var(--muted);
-    cursor:pointer;
-    font-weight:600;
-  }
-  .toggle:hover{ color:var(--accent); }
-
-  .small{
-    margin-top:10px;
-    text-align:center;
-    font-size:.9rem;
-    color:var(--muted);
-  }
-  .small a{ color:var(--accent); text-decoration:none; }
-</style>
-</head>
-
-<body>
-
-<div class="auth-box">
-  <h1 id="mode-title">Login</h1>
-
-  <input type="email" id="email" placeholder="Email" autocomplete="email" required />
-  <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
-
-  <button id="auth-btn">Login</button>
-
-  <div class="toggle" id="toggle-mode">No account? Create one</div>
-  <div class="small"><a href="/">← Back to RIVL</a></div>
-</div>
-
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-  const SUPABASE_URL = "https://evlelsygprwpvhfppxmn.supabase.co";
-  const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2bGVsc3lncHJ3cHZoZnBweG1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4Mzk2NDksImV4cCI6MjA3OTQxNTY0OX0.eyGrS_TUd6VYJ_gLVyzpdT5_bJ_5wBM5PHZpAN62LVY";
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
-
-  let mode = "login"; // login | signup
-
-  const modeTitle = document.getElementById("mode-title");
-  const authBtn = document.getElementById("auth-btn");
-  const toggle = document.getElementById("toggle-mode");
-
-  toggle.onclick = () => {
-    mode = mode === "login" ? "signup" : "login";
-    modeTitle.textContent = mode === "login" ? "Login" : "Create Account";
-    authBtn.textContent = mode === "login" ? "Login" : "Sign Up";
-    toggle.textContent =
-      mode === "login" ? "No account? Create one" : "Already have an account? Login";
-  };
-
-  authBtn.onclick = async () => {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    if (!email || !password) return alert("Fill in all fields");
-
-    if (mode === "signup") {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) return alert("Signup error: " + error.message);
-
-      // Create profile row (MVP)
-      if (data?.user) {
-        const username = email.split("@")[0].toLowerCase();
-
-        const { error: profileError } = await supabase
-          .from("profiles")
-          .insert({
-            id: data.user.id,
-            username,
-            xp: 0,
-            level: 1,
-            rank_points: 0
-          });
-
-        if (profileError) {
-          // If username already taken, fallback to random suffix
-          const fallback = username + "_" + Math.floor(Math.random()*9999);
-          await supabase.from("profiles").insert({
-            id: data.user.id,
-            username: fallback,
-            xp: 0,
-            level: 1,
-            rank_points: 0
-          });
-        }
-      }
-
-      alert("Account created! Check your email to confirm.");
-      mode = "login";
-      modeTitle.textContent = "Login";
-      authBtn.textContent = "Login";
-      toggle.textContent = "No account? Create one";
-      return;
+    if (profileError) {
+      alert("Profile creation failed: " + profileError.message);
+      console.log(profileError);
     }
+  }
 
-    // LOGIN
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return alert("Wrong email or password.");
-
-    alert("Logged in!");
-    window.location.href = "/"; // back to landing / app
-  };
-
-  // If already logged in, kick back home
-  const { data: sessionData } = await supabase.auth.getSession();
-  if (sessionData?.session) window.location.href = "/";
-</script>
-
-</body>
-</html>
+  alert("Account created! Check your email to confirm.");
+  return;
+}
