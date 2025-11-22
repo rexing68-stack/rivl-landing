@@ -280,6 +280,18 @@
       margin-top: 8px;
       opacity: 0.9;
     }
+  .logo::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      pointer-events: none;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,180,255,0.18) 0%, rgba(0,180,255,0) 70%);
+      filter: blur(22px);
+      z-index: -1;
+    }
+
   </style>
 </head>
 <body>
