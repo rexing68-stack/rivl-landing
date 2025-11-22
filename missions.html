@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>RIVL — Missions</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: Inter, sans-serif;
+    min-height: 100vh;
+    padding: 30px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #ff003c;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .mission-list {
+    max-width: 700px;
+    margin: 0 auto;
+    display: grid;
+    gap: 16px;
+  }
+
+  .mission {
+    background: #0f0f12;
+    border: 1px solid #23232b;
+    padding: 18px;
+    border-radius: 4px;
+    box-shadow: 0 0 14px rgba(255,0,60,0.4);
+  }
+
+  .mission h2 {
+    margin: 0 0 6px 0;
+    font-size: 1.3rem;
+    color: #ff2455;
+  }
+
+  .mission p {
+    margin: 0;
+    color: #9a9aa1;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  button {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: linear-gradient(180deg, #ff2455, #ff003c);
+    border: 1px solid #ff2a59;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .2s;
+  }
+
+  button:hover {
+    background: linear-gradient(180deg, #ff003c, #b8002e);
+    transform: translateY(-2px);
+  }
+
+  .logout {
+    text-align: center;
+    margin-top: 25px;
+  }
+
+  .logout button {
+    background: #111;
+    border-color: #333;
+    box-shadow: none;
+  }
+
+  .logout button:hover {
+    background: #222;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Missions</h1>
+
+<div class="mission-list" id="mission-list">
+  <p style="text-align:center; color:#aaa;">Loading missions…</p>
+</div>
+
+<div class="logout">
+  <button id="logout-btn">Logout</button>
+</div>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+  const SUPABASE_URL = "https://evlelsygprwpvhfppxmn.supabase.co";
+  const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2bGVsc3lncHJ3cHZoZnBweG1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4Mzk2NDksImV4cCI6MjA3OTQxNTY0OX0.eyGrS_TUd6VYJ_gLVyzpdT5_bJ_5wBM5PHZpAN62LVY";
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  // Check session — redirect if not logged in
+  const { data: session } = await supabase.auth.getSession();
+  if (!session.session) {
+    window.location.href = "/auth.html";
+  }
+
+  async function loadMissions() {
+    const list = document.getElementById("mission-list");
+
+    const { data, error } = await supabase
+      .from("challenges")
+      .select("*")
+      .eq("is_active", true);
+
+    if (error) {
+      list.innerHTML = "<p>Error loading missions.</p>";
+      return;
+    }
+
+    if (!data.length) {
+      list.innerHTML = "<p>No missions available yet.</p>";
+      return;
+    }
+
+    list.innerHTML = "";
+
+    data.forEach(m => {
+      const el = document.createElement("div");
+      el.classList.add("mission");
+
+      el.innerHTML = `
+        <h2>${m.title}</h2>
+        <p>${m.description || "No description"}</p>
+        <button onclick="startMission(${m.id})">Start mission</button>
+      `;
+      list.appendChild(el);
+    });
+  }
+
+  window.startMission = async function (id) {
+    const { data: session } = await supabase.auth.getSession();
+    const user_id = session.session.user.id;
+
+    const { error } = await supabase
+      .from("attempts")
+      .insert({
+        user_id,
+        challenge_id: id,
+        status: "pending"
+      });
+
+    if (error) {
+      alert("Error: " + error.message);
+    } else {
+      alert("Mission started! Attempt created.");
+    }
+  };
+
+  document.getElementById("logout-btn").onclick = async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/auth.html";
+  };
+
+  loadMissions();
+</script>
+
+</body>
+</html>
