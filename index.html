@@ -267,14 +267,14 @@
       position: fixed;
       pointer-events: none;
       z-index: -2;
-      width: 900px;
-      height: 900px;
-      inset: 10% -25% auto auto; /* lateral placement */
+      width: 1200px;
+      height: 1200px;
+      inset: -15% -10% auto auto; /* slightly lateral but close to original */
       background:
-        radial-gradient(circle at 70% 50%, rgba(255,255,255,0.28), transparent 70%),
-        radial-gradient(circle at 85% 60%, rgba(200,200,200,0.20), transparent 80%),
-        radial-gradient(circle at 75% 40(), rgba(255,255,255,0.12), transparent 85%);
-      filter: blur(30px); /* more defined cloud */
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,0.28), transparent 70%),
+        radial-gradient(circle at 60% 60%, rgba(180,180,180,0.22), transparent 80%),
+        radial-gradient(circle at 45% 55%, rgba(255,255,255,0.12), transparent 85%);
+      filter: blur(110px);
       opacity: 0.55;
       animation: floatGlow 14s ease-in-out infinite alternate;
     }
