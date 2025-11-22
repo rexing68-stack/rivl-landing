@@ -128,7 +128,7 @@
     }
 
     .brand-name {
-      font-size: 6.2rem;
+      font-size: 7.5rem;
       font-weight: 900;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -285,31 +285,24 @@
     <header>
       <div class="logo">
         <!-- Restored Dragon Eye (Version 2: aggressive + glitch + minimal) -->
-        <svg class="dragon-eye" viewBox="0 0 300 300" aria-label="RIVL Dragon Eye Logo">
-          <!-- Minimal dragon eye (no horns, cleaner shape) -->
-          <path d="M30 150 Q105 60 150 60 Q195 60 270 150 Q195 240 150 240 Q105 240 30 150 Z"
-                fill="none" stroke="var(--accent)" stroke-width="10" />
+        <svg class="dragon-eye" viewBox="0 0 300 300" aria-label="RIVL Ruby Logo">
+  <!-- Ruby outer shape -->
+  <polygon points="150,30 240,90 270,170 210,260 90,260 30,170 60,90"
+           fill="none" stroke="var(--accent)" stroke-width="10" />
 
-          <!-- Inner ring -->
-          <path d="M70 150 Q115 105 150 105 Q185 105 230 150 Q185 195 150 195 Q115 195 70 150 Z"
-                fill="#0b0b0e" stroke="var(--accent-dark)" stroke-width="6" />
+  <!-- Ruby inner facets -->
+  <polygon points="150,60 215,105 240,165 195,235 105,235 60,165 85,105"
+           fill="#0b0b0e" stroke="var(--accent-dark)" stroke-width="6" />
 
-          <!-- Iris -->
-          <circle cx="150" cy="150" r="40" fill="var(--accent-dark)" />
-          <circle cx="150" cy="150" r="28" fill="var(--accent)" opacity="0.9" />
+  <!-- Central glow -->
+  <circle cx="150" cy="165" r="28" fill="var(--accent)" opacity="0.85" />
 
-          <!-- Vertical pupil -->
-          <path d="M150 120 Q158 150 150 180 Q142 150 150 120 Z" fill="#000" />
-
-          <!-- Glow -->
-          <circle cx="150" cy="150" r="12" fill="var(--accent-2)" />
-
-          <!-- Glitch overlay -->
-          <g class="glitch">
-            <path d="M30 150 Q105 60 150 60 Q195 60 270 150 Q195 240 150 240 Q105 240 30 150 Z"
-                  fill="none" stroke="var(--accent-2)" stroke-width="4" />
-          </g>
-        </svg>
+  <!-- Glitch overlay -->
+  <g class="glitch">
+    <polygon points="150,30 240,90 270,170 210,260 90,260 30,170 60,90"
+             fill="none" stroke="var(--accent-2)" stroke-width="4" />
+  </g>
+</svg>
       </div>
       <div class="brand-name">RIVL</div>
       <div class="pill">Private Beta</div>
