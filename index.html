@@ -43,22 +43,6 @@
       overflow-x: hidden;
     }
 /* Floating glow geometry (layer 2) */
-    body::after {
-      content: "";
-      position: fixed;
-      pointer-events: none;
-      z-index: -2;
-      width: 820px;
-      height: 820px;
-      filter: blur(44px);
-      opacity: 0.55;
-      background:
-        conic-gradient(from 220deg, rgba(255,0,60,0.25), rgba(255,0,60,0) 30%, rgba(255,0,60,0.18) 55%, rgba(255,0,60,0) 80%),
-        radial-gradient(circle at 30% 30%, rgba(255,36,85,0.25), transparent 55%);
-      inset: -25% -10% auto auto;
-      animation: floatGlow 14s ease-in-out infinite alternate;
-    }
-
     @keyframes floatGlow {
       from { transform: translateY(0) rotate(0deg); }
       to   { transform: translateY(-40px) rotate(8deg); }
@@ -276,6 +260,23 @@
       opacity: 0.9;
     }
   
+
+  /* Blue glow background */
+    body::after {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      z-index: -2;
+      width: 900px;
+      height: 900px;
+      filter: blur(80px);
+      opacity: 0.65;
+      background:
+        radial-gradient(circle at 40% 40%, rgba(0,140,255,0.45), transparent 70%),
+        conic-gradient(from 120deg, rgba(0,120,255,0.35), transparent 45%, rgba(0,160,255,0.35));
+      inset: -20% -15% auto auto;
+      animation: floatGlow 14s ease-in-out infinite alternate;
+    }
 
   </style>
 </head>
