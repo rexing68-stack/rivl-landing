@@ -47,6 +47,17 @@
     }
 
     /* Floating glow geometry */
+    /* DRAGON BACKGROUND BLUR */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url('/mnt/data/gltf_embedded_0.png') center/contain no-repeat;
+      filter: blur(90px) opacity(0.09);
+      z-index: -3;
+      pointer-events: none;
+    }
+
     body::before,
     body::after {
       content: "";
