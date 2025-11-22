@@ -1,35 +1,183 @@
-// SIGNUP
-if (mode === "signup") {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password
-  });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIVL — Login / Signup</title>
 
-  if (error) {
-    alert("Signup error: " + error.message);
-    return;
-  }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-  // CREATE PROFILE ROW
-  if (data.user) {
-    const username = email.split("@")[0].toLowerCase();
-
-    const { error: profileError } = await supabase
-      .from("profiles")
-      .insert({
-        id: data.user.id,
-        username,
-        xp: 0,
-        level: 1,
-        rank_points: 0
-      });
-
-    if (profileError) {
-      alert("Profile creation failed: " + profileError.message);
-      console.log(profileError);
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: Inter, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
     }
-  }
 
-  alert("Account created! Check your email to confirm.");
-  return;
-}
+    .auth-box {
+      width: 100%;
+      max-width: 380px;
+      background: #0f0f12;
+      padding: 28px;
+      border: 1px solid #23232b;
+      border-radius: 4px;
+      box-shadow: 0 0 22px rgba(255,0,60,.5);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.7rem;
+      margin-bottom: 18px;
+      color: #ff003c;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #0a0a0d;
+      border: 1px solid #23232b;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #ff003c;
+      box-shadow: 0 0 0 3px rgba(255,0,60,.25);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(180deg, #ff2455, #ff003c);
+      border: 1px solid #ff2a59;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s;
+      margin-top: 4px;
+    }
+
+    button:hover {
+      background: linear-gradient(180deg, #ff003c, #b8002e);
+      transform: translateY(-2px);
+    }
+
+    .toggle {
+      margin-top: 14px;
+      text-align: center;
+      color: #9a9aa1;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: .9rem;
+    }
+
+    .toggle:hover {
+      color: #ff003c;
+    }
+
+    .back {
+      display: block;
+      margin-top: 16px;
+      text-align: center;
+      font-size: .9rem;
+      color: #9a9aa1;
+      text-decoration: none;
+    }
+
+    .back:hover {
+      color: #ff003c;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-box">
+    <h1 id="mode-title">Login</h1>
+
+    <input type="email" id="email" placeholder="Email" autocomplete="email" required />
+    <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
+
+    <button id="auth-btn">Login</button>
+
+    <div class="toggle" id="toggle-mode">No account? Create one</div>
+    <a class="back" href="/">← Back to RIVL</a>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+    const SUPABASE_URL = "https://evlelsygprwpvhfppxmn.supabase.co";
+    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2bGVsc3lncHJ3cHZoZnBweG1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4Mzk2NDksImV4cCI6MjA3OTQxNTY0OX0.eyGrS_TUd6VYJ_gLVyzpdT5_bJ_5wBM5PHZpAN62LVY";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    let mode = "login";
+
+    const modeTitle = document.getElementById("mode-title");
+    const authBtn = document.getElementById("auth-btn");
+    const toggle = document.getElementById("toggle-mode");
+
+    toggle.onclick = () => {
+      mode = mode === "login" ? "signup" : "login";
+      modeTitle.textContent = mode === "login" ? "Login" : "Create Account";
+      authBtn.textContent = mode === "login" ? "Login" : "Sign Up";
+      toggle.textContent = mode === "login" ? "No account? Create one" : "Already have an account? Login";
+    };
+
+    authBtn.onclick = async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) return alert("Fill in all fields");
+
+      if (mode === "signup") {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) return alert("Signup error: " + error.message);
+
+        if (data.user) {
+          const username = email.split("@")[0].toLowerCase();
+
+          const { error: profileError } = await supabase.from("profiles").insert({
+            id: data.user.id,
+            username,
+            xp: 0,
+            level: 1,
+            rank_points: 0
+          });
+
+          if (profileError) {
+            alert("Profile creation failed: " + profileError.message);
+          }
+        }
+
+        alert("Account created! Check your email.");
+        return;
+      }
+
+      const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+      if (loginError) return alert("Wrong email or password.");
+
+      alert("Logged in!");
+      window.location.href = "/missions.html";
+    };
+
+    const { data: sessionData } = await supabase.auth.getSession();
+    if (sessionData?.session) window.location.href = "/missions.html";
+  </script>
+</body>
+</html>
