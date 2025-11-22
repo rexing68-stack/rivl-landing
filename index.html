@@ -40,78 +40,9 @@
       place-items: center;
       padding: 34px;
       background:
-        radial-gradient(circle at 50% 40%, rgba(255,235,210,0.35), transparent 70%),
-        radial-gradient(circle at 60% 60%, rgba(255,200,160,0.28), transparent 80%),
-        radial-gradient(circle at 45% 55%, rgba(255,220,180,0.18), transparent 85%);
-      filter: drop-shadow(0 0 28px var(--accent));
-      animation: eyePulse 2.2s ease-in-out infinite;
-    }
-    .dragon-eye .glitch {
-      animation: eyeGlitch 1.6s steps(2, end) infinite;
-      transform-origin: center;
-      opacity: 0.32;
-      mix-blend-mode: screen;
-    }
-
-    @keyframes eyePulse {
-      0%,100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.03); opacity: 0.95; }
-    }
-    @keyframes eyeGlitch {
-      0%   { transform: translate(0,0); }
-      20%  { transform: translate(-2px,1px); }
-      40%  { transform: translate(2px,-1px); }
-      60%  { transform: translate(-1px,2px); }
-      80%  { transform: translate(1px,-2px); }
-      100% { transform: translate(0,0); }
-    }
-
-    .brand-name {
-      font-size: 7rem;
-      font-weight: 900;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      line-height: 1;
-    }
-
-    .pill {
-      font-size: 14px;
-      font-weight: 800;
-      color: #fff;
-      background: linear-gradient(180deg, #24000d, #120006);
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid #3a0013;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      box-shadow: 0 0 12px rgba(255,0,60,0.25);
-      transform: scale(1.2);
-    }
-
-    .card {
-      background: linear-gradient(180deg, var(--card), var(--card-2));
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      padding: 26px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      animation: rise 0.8s ease-out both;
-      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-    }
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: #ff2a59;
-      box-shadow: 0 14px 36px rgba(255,0,60,0.35);
-    }
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -60% -30% auto auto;
-      width: 360px; height: 360px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,0,60,0.35), transparent 55%),
-        conic-gradient(from 120deg, rgba(255,0,60,0.2), transparent 45%, rgba(255,0,60,0.2));
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,0.28), transparent 70%),
+        radial-gradient(circle at 60% 60%, rgba(200,200,200,0.22), transparent 80%),
+        radial-gradient(circle at 45% 55%, rgba(255,255,255,0.12), transparent 85%);
       filter: blur(28px);
       opacity: 0.5;
       transform: rotate(12deg);
