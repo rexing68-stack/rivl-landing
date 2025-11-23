@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>RIVL — Mission</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: Inter, sans-serif;
+    padding: 24px;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2rem;
+    color: #ff003c;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .box {
+    background: #111;
+    border: 1px solid #23232b;
+    padding: 20px;
+    border-radius: 6px;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 0 22px rgba(255,0,60,.3);
+  }
+
+  #counter {
+    font-size: 3.2rem;
+    font-weight: 900;
+    margin: 14px 0;
+  }
+
+  #click-area {
+    width: 100%;
+    padding: 40px;
+    background: #0f0f12;
+    border: 1px solid #ff003c;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    margin-top: 20px;
+    box-shadow: 0 0 16px rgba(255,0,60,.4);
+    user-select: none;
+  }
+
+  #click-area:active {
+    background: #170006;
+  }
+
+  #timer {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    color: #ff2455;
+  }
+
+  button {
+    padding: 12px 18px;
+    background: linear-gradient(180deg, #ff2455, #ff003c);
+    border: 1px solid #ff2a59;
+    border-radius: 6px;
+    font-weight: 800;
+    color: #fff;
+    margin-top: 20px;
+  }
+</style>
+</head>
+
+<body>
+
+<h1 id="mission-title">Loading...</h1>
+
+<div class="box">
+  <p id="mission-desc"></p>
+
+  <div id="timer"></div>
+
+  <div id="counter">0</div>
+
+  <div id="click-area">CLICK AS FAST AS YOU CAN</div>
+
+  <button id="exit-btn">Exit Mission</button>
+</div>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+  const supabase = createClient(
+    "https://evlelsygprwpvhfppxmn.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2bGVsc3lncHJ3cHZoZnBweG1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4Mzk2NDksImV4cCI6MjA3OTQxNTY0OX0.eyGrS_TUd6VYJ_gLVyzpdT5_bJ_5wBM5PHZpAN62LVY"
+  );
+
+  // Read mission id from URL
+  const params = new URLSearchParams(window.location.search);
+  const missionId = params.get("id");
+  if (!missionId) {
+    alert("Invalid mission");
+    window.location.href = "/missions.html";
+  }
+
+  // Load mission
+  const { data: mission } = await supabase
+    .from("challenges")
+    .select("*")
+    .eq("id", missionId)
+    .single();
+
+  document.getElementById("mission-title").textContent = mission.title;
+  document.getElementById("mission-desc").textContent = mission.description;
+
+  // Load user session
+  const { data: sessionData } = await supabase.auth.getSession();
+  const user = sessionData?.session?.user;
+
+  if (!user) {
+    window.location.href = "/auth.html";
+  }
+
+  // Create attempt
+  const { data: attemptInsert, error: attemptError } = await supabase
+    .from("attempts")
+    .insert({
+      user_id: user.id,
+      challenge_id: missionId,
+      status: "pending"
+    })
+    .select()
+    .single();
+
+  const attemptId = attemptInsert.id;
+
+  let counter = 0;
+  let timeLeft = mission.metadata.duration_seconds || 7;
+  let started = false;
+
+  const counterEl = document.getElementById("counter");
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = timeLeft + "s";
+
+  const clickArea = document.getElementById("click-area");
+
+  clickArea.onclick = () => {
+    if (!started) return;
+    counter++;
+    counterEl.textContent = counter;
+  };
+
+  // Start countdown
+  function startMission() {
+    started = true;
+
+    const interval = setInterval(async () => {
+      timeLeft--;
+      timerEl.textContent = timeLeft + "s";
+
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        started = false;
+
+        await supabase
+          .from("attempts")
+          .update({ score: counter, status: "approved" })
+          .eq("id", attemptId);
+
+        alert("Mission complete! Score: " + counter);
+
+        window.location.href = "/missions.html";
+      }
+    }, 1000);
+  }
+
+  setTimeout(startMission, 1000);
+
+  document.getElementById("exit-btn").onclick = () => {
+    window.location.href = "/missions.html";
+  };
+</script>
+
+</body>
+</html>
