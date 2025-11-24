@@ -21,8 +21,8 @@
       --border-subtle: #2a2a2e;
       --border-active: #3e3e42;
 
-      --primary: #007aff;
-      --primary-glow: rgba(0, 122, 255, 0.4);
+      --primary: #ff3b30;
+      --primary-glow: rgba(255, 59, 48, 0.4);
 
       --accent-green: #00e599;
       --accent-red: #ff3b30;
@@ -32,7 +32,7 @@
       --text-dim: #52525b;
 
       /* Spacing & Layout - COMPACT MODE */
-      --header-height: 52px;
+      --header-height: 120px;
       /* Reduced from 64px */
       --sidebar-width: 200px;
       /* Reduced from 240px */
@@ -86,37 +86,40 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 24px;
       font-weight: 800;
-      font-size: 1.1rem;
-      /* Smaller brand */
+      font-size: 3.5rem;
       letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 59, 48, 0.5);
     }
 
-    .brand svg {
-      width: 24px;
-      /* Smaller logo */
-      height: 24px;
-      color: var(--primary);
+    .brand img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 5px var(--primary));
+      mix-blend-mode: screen;
     }
 
     .search-bar {
-      background: var(--bg-app);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
-      padding: 6px 12px;
-      /* Smaller input */
-      width: 320px;
-      /* Narrower */
+      padding: 8px 16px;
+      width: 380px;
       color: var(--text-main);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       transition: 0.2s;
+      backdrop-filter: blur(5px);
     }
 
     .search-bar:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px var(--primary-glow);
+      box-shadow: 0 0 15px var(--primary-glow);
+      background: rgba(0, 0, 0, 0.3);
     }
 
     .user-actions {
@@ -340,9 +343,7 @@
   <!-- Header -->
   <header class="app-header">
     <div class="brand">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-      </svg>
+      <img src="logo.png" alt="RIVL Logo">
       <span>RIVL</span>
     </div>
 
