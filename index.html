@@ -1,330 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RIVL — Challenge Platform</title>
+  <title>RIVL — Minigame Market</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --bg: #000;
-      --card: #0f0f12;
-      --card-2: #121218;
-      --text: #ffffff;
-      --muted: #9a9aa1;
-      --line: #23232b;
-
-      --accent: #ff003c;
-      --accent-2: #ff2455;
-      --accent-dark: #b8002e;
-
-      --radius: 3px;
-      --shadow: 0 10px 26px rgba(255, 0, 60, 0.22);
-    }
-
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 34px;
-      background: var(--bg);
-      overflow-x: hidden;
-    }
-
-    /* Ambient red glow (original) */
-    body::after {
-      content: "";
-      position: fixed;
-      pointer-events: none;
-      z-index: -2;
-      width: 1200px;
-      height: 1200px;
-      inset: -25% -20% auto auto;
-      background:
-        radial-gradient(circle at 50% 40%, rgba(255,0,60,0.42), transparent 70%),
-        radial-gradient(circle at 60% 60%, rgba(180,0,35,0.30), transparent 80%),
-        radial-gradient(circle at 45% 55%, rgba(255,0,60,0.18), transparent 85%);
-      filter: blur(140px);
-      opacity: 0.68;
-      animation: floatGlow 14s ease-in-out infinite alternate;
-    }
-    @keyframes floatGlow {
-      from { transform: translateY(0) rotate(0deg); }
-      to   { transform: translateY(-40px) rotate(8deg); }
-    }
-
-    .wrap {
-      width: 100%;
-      max-width: 980px;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 14px;
-      animation: rise 0.7s ease both;
-    }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-    }
-
-    header {
-      grid-column: 1 / -1;
-      display: grid;
-      place-items: center;
-      position: relative;
-      padding: 8px 0 2px 0;
-    }
-
-    /* HEADER LOGIN BUTTON */
-    .auth-link {
-      position: absolute;
-      right: 0;
-      top: 0;
-      text-decoration: none;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      color: #fff;
-      padding: 10px 12px;
-      border: 1px solid #ff2a59;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, var(--accent-2), var(--accent));
-      box-shadow: 0 0 12px rgba(255,0,60,0.6);
-      transition: .2s;
-    }
-    .auth-link:hover {
-      transform: translateY(-2px);
-      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
-      box-shadow: 0 0 18px rgba(255,0,60,0.9);
-    }
-
-    .logo svg {
-      width: 120px;
-      height: auto;
-      display: block;
-      margin: 0 auto 10px auto;
-      filter: drop-shadow(0 0 28px var(--accent));
-    }
-
-    .brand-name {
-      font-size: 3.2rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      text-align: center;
-      margin-top: 6px;
-      color: var(--text);
-    }
-
-    .pill {
-      margin-top: 6px;
-      font-size: 0.82rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      padding: 6px 10px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #0b0b0e;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.2rem, 3.2vw, 3rem);
-      line-height: 1.15;
-      margin: 2px 0 14px 0;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    .hero p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.65;
-      margin-bottom: 18px;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .feature {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 12px;
-      background: #0c0c10;
-      display: flex;
-      gap: 10px;
-      font-size: 0.95rem;
-      align-items: center;
-      transition: 0.2s;
-    }
-    .feature:hover {
-      border-color: var(--accent);
-      background: #160008;
-      transform: translateY(-2px);
-    }
-    .dot {
-      width: 9px; height: 9px;
-      border-radius: 2px;
-      background: var(--accent);
-      box-shadow: 0 0 10px var(--accent);
-      flex: 0 0 auto;
-    }
-
-    .cta-card h2 { margin: 0 0 6px 0; font-size: 1.35rem; }
-    .cta-card p { margin: 0 0 14px 0; color: var(--muted); }
-
-    .form {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    input[type="email"] {
-      padding: 12px 14px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      font-size: 1rem;
-      background: #0a0a0d;
-      color: var(--text);
-      transition: 0.2s;
-      outline: none;
-    }
-    input[type="email"]:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(255,0,60,0.2);
-    }
-    button {
-      padding: 12px 18px;
-      border-radius: var(--radius);
-      border: 1px solid #ff2a59;
-      background: linear-gradient(180deg, var(--accent-2), var(--accent));
-      color: #fff;
-      font-weight: 800;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 0 14px rgba(255, 0, 60, 0.6);
-      transition: 0.2s;
-    }
-    button:hover {
-      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
-      transform: translateY(-2px);
-      box-shadow: 0 0 22px rgba(255,0,60,0.85);
-    }
-
-    /* Optional secondary CTA under hero */
-    .hero .secondary-auth {
-      display: inline-block;
-      margin-top: 8px;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      color: var(--text);
-      text-decoration: none;
-      opacity: 0.9;
-      transition: .2s;
-    }
-    .hero .secondary-auth:hover {
-      color: var(--accent);
-      opacity: 1;
-    }
-
-    footer {
-      grid-column: 1 / -1;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-top: 8px;
-      opacity: 0.9;
-    }
-
-    @media (max-width: 900px) {
-      .wrap { grid-template-columns: 1fr; }
-      .features { grid-template-columns: 1fr; }
-      .auth-link { position: static; margin-bottom: 10px; }
-      header { gap: 6px; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="wrap">
 
-    <header>
-      <!-- LOGIN / SIGNUP button -->
-      <a class="auth-link" href="/auth.html">Login / Signup</a>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+      </svg>
+      <span>RIVL</span>
+    </div>
 
-      <div class="logo">
-        <svg class="dragon-eye" viewBox="0 0 300 300" aria-label="RIVL Cyber Arch Logo">
-          <!-- CYBER ARCH (sharp, angular, glowing) -->
-          <path d="M80 220 V130 L150 70 L220 130 V220"
-                fill="none" stroke="var(--accent)" stroke-width="10" />
+    <input type="text" class="search-bar" placeholder="Search markets, games, or players...">
 
-          <!-- CYBER DOORWAY (black interior, no bottom line) -->
-          <path d="M135 220 V155 L150 135 L165 155 V220"
-                fill="#000" stroke="var(--accent-dark)" stroke-width="6" />
+    <div class="user-actions">
+      <button class="btn btn-ghost">Log In</button>
+      <button class="btn btn-primary">Sign Up</button>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="#" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
         </svg>
-      </div>
-
-      <div class="brand-name">RIVL</div>
-      <div class="pill">Private Beta</div>
-    </header>
-
-    <section class="card hero">
-      <h1>BREAK THE ROUTINE.<br>RULE THE GRID.</h1>
-      <p>
-        RIVL is a real-world cyber arena. Complete missions. Outplay opponents. Claim your spot on the grid.
-      </p>
-
-      <a class="secondary-auth" href="/auth.html">Enter the Arena →</a>
-
-      <div class="features">
-        <div class="feature"><span class="dot"></span>Indoor & Outdoor missions</div>
-        <div class="feature"><span class="dot"></span>Skill-based progression</div>
-        <div class="feature"><span class="dot"></span>Weekly competitive ladders</div>
-        <div class="feature"><span class="dot"></span>Stay active through play</div>
-      </div>
-    </section>
-
-    <aside class="card cta-card">
-      <h2>Get early access</h2>
-      <p>Enter your email to join the private beta.</p>
-
-      <form class="form" onsubmit="event.preventDefault(); alert('Thanks! We will contact you soon.');">
-        <input type="email" required placeholder="you@example.com" />
-        <button type="submit">Join beta</button>
-      </form>
+        Markets
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+        Favorites
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        </svg>
+        Activity
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3" />
+          <path
+            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        </svg>
+        Settings
+      </a>
     </aside>
 
-    <footer>
-      © <span id="year"></span> RIVL Club. All rights reserved.
-    </footer>
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>Trending Minigames</h2>
+          <p>Top rated challenges and competitions ending soon.</p>
+        </div>
+        <div class="filters">
+          <!-- Could add filter buttons here later -->
+        </div>
+      </div>
+
+      <div id="game-grid" class="game-grid">
+        <!-- Games will be injected here by app.js -->
+      </div>
+    </main>
   </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-
-  <!-- Supabase client -->
-  <script type="module" src="./app.js"></script>
+  <script src="app.js"></script>
 </body>
+
 </html>
