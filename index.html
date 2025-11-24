@@ -10,7 +10,329 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      /* Color Palette - Cyber Fintech */
+      --bg-app: #0a0a0a;
+      --bg-panel: #161618;
+      --bg-card: #1c1c1f;
+      --bg-card-hover: #252529;
+
+      --border-subtle: #2a2a2e;
+      --border-active: #3e3e42;
+
+      --primary: #007aff;
+      --primary-glow: rgba(0, 122, 255, 0.4);
+
+      --accent-green: #00e599;
+      --accent-red: #ff3b30;
+
+      --text-main: #ededed;
+      --text-muted: #a1a1aa;
+      --text-dim: #52525b;
+
+      /* Spacing & Layout - COMPACT MODE */
+      --header-height: 52px;
+      /* Reduced from 64px */
+      --sidebar-width: 200px;
+      /* Reduced from 240px */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      /* Typography */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      /* Smaller base font */
+    }
+
+    /* --- Layout --- */
+    .app-container {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - var(--header-height));
+      overflow: hidden;
+    }
+
+    /* --- Header --- */
+    .app-header {
+      height: var(--header-height);
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-panel);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      /* Reduced padding */
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      /* Smaller brand */
+      letter-spacing: -0.02em;
+    }
+
+    .brand svg {
+      width: 24px;
+      /* Smaller logo */
+      height: 24px;
+      color: var(--primary);
+    }
+
+    .search-bar {
+      background: var(--bg-app);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      /* Smaller input */
+      width: 320px;
+      /* Narrower */
+      color: var(--text-main);
+      font-size: 0.85rem;
+      transition: 0.2s;
+    }
+
+    .search-bar:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-glow);
+    }
+
+    .user-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      /* Smaller buttons */
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: none;
+      transition: 0.2s;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text-main);
+      background: var(--bg-card);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+    }
+
+    /* --- Sidebar --- */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border-subtle);
+      padding: 16px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      /* Tighter list */
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      /* Compact nav items */
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    .nav-item svg {
+      width: 16px;
+      /* Smaller icons */
+      height: 16px;
+      opacity: 0.7;
+    }
+
+    /* --- Main Content --- */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      /* Reduced padding */
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 16px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      /* Smaller title */
+      font-weight: 700;
+    }
+
+    .section-title p {
+      margin: 2px 0 0 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* --- Game Grid --- */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      /* Smaller cards */
+      gap: 16px;
+    }
+
+    .game-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .game-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-active);
+      background: var(--bg-card-hover);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-image {
+      height: 110px;
+      /* Shorter image */
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 6px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-body {
+      padding: 12px;
+      /* Reduced padding */
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      /* Smaller text */
+      font-weight: 600;
+      margin: 0 0 6px 0;
+      line-height: 1.3;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.75rem;
+      /* Smaller meta text */
+      color: var(--text-muted);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .meta-value {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .accent-text {
+      color: var(--primary);
+    }
+
+    .green-text {
+      color: var(--accent-green);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-active);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+  </style>
 </head>
 
 <body>
@@ -84,7 +406,92 @@
     </main>
   </div>
 
-  <script src="app.js"></script>
+  <script>
+    const games = [
+      {
+        id: 1,
+        title: "Cyber Heist: Data Extraction",
+        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop",
+        category: "Puzzle",
+        players: "12.5k",
+        prize: "$5,000",
+        live: true
+      },
+      {
+        id: 2,
+        title: "Neon Racer: Midnight Run",
+        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
+        category: "Racing",
+        players: "8.2k",
+        prize: "$2,500",
+        live: true
+      },
+      {
+        id: 3,
+        title: "Quantum Chess Arena",
+        image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=2071&auto=format&fit=crop",
+        category: "Strategy",
+        players: "24k",
+        prize: "$10,000",
+        live: true
+      },
+      {
+        id: 4,
+        title: "Drone Defense Protocol",
+        image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?q=80&w=2070&auto=format&fit=crop",
+        category: "Action",
+        players: "5.1k",
+        prize: "$1,200",
+        live: false
+      },
+      {
+        id: 5,
+        title: "Crypto Trader Sim 2077",
+        image: "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=2064&auto=format&fit=crop",
+        category: "Simulation",
+        players: "18k",
+        prize: "$8,000",
+        live: true
+      },
+      {
+        id: 6,
+        title: "Neural Network Breaker",
+        image: "https://images.unsplash.com/photo-1558494949-ef526b01201b?q=80&w=1974&auto=format&fit=crop",
+        category: "Puzzle",
+        players: "3.4k",
+        prize: "$500",
+        live: false
+      }
+    ];
+
+    function renderGames() {
+      const grid = document.getElementById('game-grid');
+      grid.innerHTML = games.map(game => `
+        <div class="game-card">
+          <div class="card-image" style="background-image: url('${game.image}')">
+            ${game.live ? '<span class="card-badge">LIVE</span>' : ''}
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${game.title}</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <span class="meta-label">Pool:</span>
+                <span class="meta-value green-text">${game.prize}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-value">${game.players}</span>
+                <span class="meta-label">Players</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderGames();
+    });
+  </script>
 </body>
 
 </html>
